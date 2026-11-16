@@ -61,7 +61,8 @@ describe("AI chat service", () => {
 
 		expect(openAiCompatible.fetchMock).toHaveBeenCalledTimes(1);
 		expect(openAiCompatible.getRequestBody()).not.toHaveProperty("response_format");
-		expect(openAiCompatible.getRequestBody()).toMatchObject({ max_tokens: 128, temperature: 0 });
+		expect(openAiCompatible.getRequestBody()).toMatchObject({ max_tokens: 1024 });
+		expect(openAiCompatible.getRequestBody()).not.toHaveProperty("temperature");
 	});
 
 	it("explains when the provider test hits the output limit", async () => {
