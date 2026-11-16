@@ -170,7 +170,7 @@ type BuildResumeParsingMessagesInput = {
 };
 
 function buildResumeParsingSystemPrompt(systemPrompt: string): string {
-	return `${systemPrompt}\n\nIMPORTANT: You must return ONLY raw valid JSON. Do not return markdown, do not return explanations. Just the JSON object. Use the following JSON as a template and fill in the extracted values. For arrays, you MUST use the exact key names shown in the template (e.g. use 'description' instead of 'summary', 'website' instead of 'url'):\n\n${JSON.stringify(aiExtractionTemplate, null, 2)}`;
+	return `${systemPrompt}\n\nFill in this JSON template with the extracted values. Use the template's key names exactly (for example 'description', not 'summary'; 'website', not 'url'), because the importer matches fields by these names:\n\n${JSON.stringify(aiExtractionTemplate, null, 2)}`;
 }
 
 function buildResumeParsingMessages({ userPrompt, file, mediaType }: BuildResumeParsingMessagesInput): ModelMessage[] {
@@ -396,8 +396,7 @@ async function analyzeResume(input: AnalyzeResumeInput): Promise<ResumeAnalysis>
 		messages: [
 			{
 				role: "user",
-				content:
-					"Analyze this resume and return a structured report with scorecard, overall score, strengths, and actionable suggestions. Return ONLY raw JSON, no markdown fences or explanations.",
+				content: "Analyze this resume and return the analysis JSON.",
 			},
 		],
 	});

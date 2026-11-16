@@ -74,7 +74,8 @@ export function buildAgentTools(input: BuildAgentToolsInput): ToolSet {
 			}),
 		}),
 		read_resume: tool({
-			description: "Read the current working resume JSON and metadata.",
+			description:
+				"Read the current working resume. Returns its id, name and updatedAt, `data` (the resume data object that apply_resume_patch paths are rooted at), and `patchPathExamples` and `patchNotes` describing the path conventions. Takes no arguments; call it before the first patch.",
 			inputSchema: z.object({}),
 			execute: input.handlers.readResume,
 		}),

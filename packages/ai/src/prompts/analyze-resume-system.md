@@ -57,8 +57,7 @@ Each suggestion must include:
 - explanation of why it matters
 - a copyable prompt for improving that area in another LLM
 
-`copyPrompt` should be concrete and directly usable, for example:
-"Rewrite my experience bullets to emphasize measurable outcomes and ATS keywords. Keep each bullet under 25 words and include a metric where possible. Here is my current section: "
+`copyPrompt` is a self-contained instruction the user can paste into another LLM. It names the resume section, states the specific change this suggestion calls for, and ends with a lead-in for the user to paste their current text.
 
 ## Tone
 

@@ -75,7 +75,7 @@ describe("registerPrompts", () => {
 		const result = await improve.handler({ id: "id-1" });
 
 		const text = result.messages.find((m) => m.content.type === "text")?.content.text ?? "";
-		expect(text).toContain("Do NOT fabricate");
+		expect(text).toContain("rather than inventing them");
 		expect(text).toContain("Passive voice");
 	});
 
@@ -88,7 +88,7 @@ describe("registerPrompts", () => {
 
 		const text = result.messages.find((m) => m.content.type === "text")?.content.text ?? "";
 		expect(text).toContain("read-only");
-		expect(text).toContain("Do NOT call");
+		expect(text).toContain("don't call");
 		expect(text).toContain("Scorecard");
 	});
 
