@@ -1,6 +1,6 @@
 # AGENTS.md
 
-## Cursor Cloud specific instructions
+## Agent instructions
 
 ### Overview
 
@@ -12,7 +12,7 @@ Internal packages are source-consumed through `package.json` export maps that po
 
 - **Node.js 24** (matches Dockerfile `ARG NODE_VERSION=24`). Use `nvm install 24 && nvm use 24` if needed.
 - **Docker** is required to run PostgreSQL. Start it with `sudo dockerd &` if the daemon isn't running.
-- **pnpm 11.1.2** is managed via corepack (`corepack enable`).
+- **pnpm** (version pinned by `packageManager` in `package.json`) is managed via corepack (`corepack enable`).
 
 ### Codebase map
 
@@ -128,7 +128,7 @@ When running dev servers or migration commands, prefix the command with `dotenvx
 | Run migrations | `dotenvx run -f .env.local -- pnpm db:migrate` |
 | Dev server | `dotenvx run -f .env.local -- pnpm dev` (starts on port 3000) |
 | Web dev server only | `dotenvx run -f .env.local -- pnpm dev:web` |
-| Lint/format | `pnpm check` (Biome) |
+| Lint/format | `pnpm check` (Biome, markdownlint, actionlint) |
 | Boundary check | `pnpm exec turbo boundaries` |
 | Tests | `pnpm test` (Vitest) |
 | Build | `pnpm build` |
@@ -150,7 +150,7 @@ Vitest test paths are package-relative when running through `pnpm --filter <pack
 - The server startup path auto-runs migrations before serving traffic, so `pnpm db:migrate` is mainly needed for first-time setup, migration debugging, or applying migrations without starting the app.
 - Email sending requires SMTP config; without it, emails are logged to console. This is fine for dev — the app still functions, but email verification links appear in server logs.
 - The `lefthook.yml` pre-commit hook runs `biome check` on staged files. Run `pnpm check` before committing to avoid hook failures.
-- `pnpm check` is write-capable (`biome check --write --unsafe .`). Call that out when using it, and use narrower Biome commands if you need a non-mutating inspection.
+- `pnpm check` is write-capable: it runs `biome check --write --unsafe .` and `markdownlint-cli2 --fix`, so it can rewrite Markdown files too. Call that out when using it, and use narrower Biome commands if you need a non-mutating inspection.
 - Biome uses tabs, double quotes, line width 120, organized import groups, and sorted Tailwind classes for `clsx`, `cva`, and `cn`.
 - Most packages use `tsgo --noEmit` for typechecking and `vitest run --passWithNoTests` for tests.
 - There may be unrelated local edits in the worktree. Inspect `git status --short` first and avoid reverting files you did not touch.
